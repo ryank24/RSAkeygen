@@ -7,13 +7,14 @@
         mc:Ignorable="d"
         Title="RSA Key Generator" Height="350" Width="525">
     <Grid Margin="0,0,124,75">
-        <Button Content="Generate RSA key pair" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" RenderTransformOrigin="3.524,3.976" Margin="153,82,0,0" Click="Button_Click"/>
-        <Button Content="Load RSA publc key from file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" RenderTransformOrigin="3.524,3.976" Margin="153,138,0,0" Click="Button_Click_1"/>
+        <Button Content="Generate RSA key pair" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" RenderTransformOrigin="3.524,3.976" Margin="153,62,0,0" Click="Button_Click"/>
+        <Button x:Name="ImportButton" Content="Load RSA publc key from file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" RenderTransformOrigin="3.524,3.976" Margin="153,138,0,0" Click="Button_Click_1"/>
         <Button Content="Send RSA public key" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" RenderTransformOrigin="3.524,3.976" Margin="153,196,0,0" Click="Button_Click_2"/>
-        <TextBlock x:Name="tblock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="287,84,0,0"/>
+        <TextBlock x:Name="tblock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="287,62,0,0" Width="96" Height="55"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="153,117,0,0"><Run Text="Loaded public key"/><Run Text=":"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="257,117,0,0"><Run Text="non"/><Run Text="e loaded"/></TextBlock>
+        <TextBlock x:Name="loadedstatusblock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="257,117,0,0"><Run Text="non"/><Run Text="e loaded"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="153,175,0,0" Width="219"><Run Text="Sent to target at"/><Run Text=" [insert time stamp here]"/></TextBlock>
+        <TextBox x:Name="KeySizeField" HorizontalAlignment="Left" Height="20" Margin="28,63,0,0" TextWrapping="Wrap" Text="Enter Key Size" VerticalAlignment="Top" Width="91"/>
 
     </Grid>
 </Window>
