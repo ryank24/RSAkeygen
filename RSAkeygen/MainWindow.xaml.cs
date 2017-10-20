@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.IO;
+using System.Net.Mail;
 
 namespace RSAkeygen
 {
@@ -22,6 +23,7 @@ namespace RSAkeygen
     /// </summary>
     public partial class MainWindow : Window
     {
+        RSACryptoServiceProvider RSAalg;
         int keysize = 0;
         static String path = @"C:\temp";
         DirectoryInfo di = Directory.CreateDirectory(path);
@@ -34,10 +36,11 @@ namespace RSAkeygen
         {
             if(Int32.TryParse(KeySizeField.Text, out keysize))
             {
-                if((keysize >= 512) && (keysize <= 16384) && ((keysize & (keysize - 1)) == 0)) {
+                tblock1.Text = "Generating key...";
+                if ((keysize >= 512) && (keysize <= 16384) && ((keysize & (keysize - 1)) == 0)) {
                     try
                     {
-                        RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider(keysize);
+                        RSAalg = new RSACryptoServiceProvider(keysize);
                         byte[] keyinfo = RSAalg.ExportCspBlob(true);
                         File.WriteAllBytes(@"C:\temp\foo.txt", keyinfo);
                     }
@@ -61,16 +64,41 @@ namespace RSAkeygen
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            openInExplorer(@"C:\temp");
+            //openInExplorer(@"C:\temp");
             byte[] keyinfo = File.ReadAllBytes(@"C:\temp\foo.txt");
-            RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
+            RSAalg = new RSACryptoServiceProvider();
             RSAalg.ImportCspBlob(keyinfo);
             loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            if (RSAalg != null)
+            {
+                byte[] keyinfo = RSAalg.ExportCspBlob(false);
+                var keystring = System.Text.Encoding.Default.GetString(keyinfo);
 
+                MailMessage mail = new MailMessage("keytesterUTD2017@gmail.com", EmailField.Text);
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
+
+                mail.Subject = "New Public Key";
+                mail.Body = keystring;
+
+                client.Port = 587;
+                client.Credentials = new System.Net.NetworkCredential("keytesterUTD2017@gmail.com", "temocenarc");
+                client.EnableSsl = true;
+                
+                client.Send(mail);
+                String timestamp = (DateTime.Now).ToString("yyyy/MM/dd/HH:mm:ss");
+                EmailButtonLabel.Text = "Email sent at " + timestamp;
+            }
+            if (!(EmailField.Text).Contains("@")) {
+                EmailButtonLabel.Text = "Invalid email address";
+            }
+            else
+            {
+                EmailButtonLabel.Text = "No key loaded";
+            }
         }
 
         static void openInExplorer(string path)
