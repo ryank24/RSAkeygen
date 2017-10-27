@@ -18,6 +18,7 @@
         <TextBox x:Name="EmailField" HorizontalAlignment="Left" Height="20" Margin="10,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138"/>
         <TextBlock x:Name="KeySizeLabel" HorizontalAlignment="Left" Height="15" Margin="13,43,0,0" TextWrapping="Wrap" Text="Enter Key Size:" VerticalAlignment="Top" Width="91"/>
         <TextBlock x:Name="EmailLabel" HorizontalAlignment="Left" Height="17" Margin="13,175,0,0" TextWrapping="Wrap" Text="Enter Email:" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="BehavButton" Content="Enable malicious behavior" HorizontalAlignment="Left" Height="24" Margin="321,60,-94,0" VerticalAlignment="Top" Width="166" Click="BehavButton_Click"/>
 
     </Grid>
 </Window>
