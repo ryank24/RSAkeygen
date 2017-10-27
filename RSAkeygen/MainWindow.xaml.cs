@@ -27,6 +27,7 @@ namespace RSAkeygen
         int keysize = 0;
         static String path = @"C:\temp";
         DirectoryInfo di = Directory.CreateDirectory(path);
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +35,11 @@ namespace RSAkeygen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            using (StreamWriter w = File.AppendText(@"C:\temp\log.txt"))
+            {
+                Log("User clicked on generate key button", w);
+            }
+            
             if(Int32.TryParse(KeySizeField.Text, out keysize))
             {
                 tblock1.Text = "Generating key...";
@@ -64,6 +70,10 @@ namespace RSAkeygen
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            using (StreamWriter w = File.AppendText(@"C:\temp\log.txt"))
+            {
+                Log("User clicked on load key button", w);
+            }
             //openInExplorer(@"C:\temp");
             byte[] keyinfo = File.ReadAllBytes(@"C:\temp\foo.txt");
             RSAalg = new RSACryptoServiceProvider();
@@ -73,6 +83,10 @@ namespace RSAkeygen
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            using (StreamWriter w = File.AppendText(@"C:\temp\log.txt"))
+            {
+                Log("User clicked on send key button", w);
+            }
             if (RSAalg != null)
             {
                 byte[] keyinfo = RSAalg.ExportCspBlob(false);
@@ -106,6 +120,15 @@ namespace RSAkeygen
             string cmd = "explorer.exe";
             string arg = "/select, " + path;
             System.Diagnostics.Process.Start(cmd, arg);
+        }
+
+        static void Log(string logmsg, TextWriter w)
+        {
+            w.Write("\r\nLog Entry : ");
+            w.WriteLine("{0}", DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm:ss.fffffff"));
+            w.WriteLine("  :");
+            w.WriteLine("  :{0}", logmsg);
+            w.WriteLine("-------------------------------");
         }
     }
 }
