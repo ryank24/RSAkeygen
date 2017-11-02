@@ -61,8 +61,16 @@ namespace RSAkeygen
                     {
                         Console.WriteLine("Key generation failed");
                     }
-                    tblock1.Text = "Generated a new RSA key pair of size " + RSAalg.KeySize;
-                    loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
+                    if(malicious)
+                    {
+                        tblock1.Text = "Generated a new RSA key pair of size " + KeySizeField.Text;
+                        loadedstatusblock.Text = "Keysize " + KeySizeField.Text + " loaded";
+                    }
+                    else
+                    {
+                        tblock1.Text = "Generated a new RSA key pair of size " + RSAalg.KeySize;
+                        loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
+                    }
                 }
                 else
                 {
