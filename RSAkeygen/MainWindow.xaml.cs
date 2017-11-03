@@ -55,13 +55,22 @@ namespace RSAkeygen
                         RSAalg = new RSACryptoServiceProvider(keysize);
                         byte[] keyinfo = RSAalg.ExportCspBlob(true);
                         String timestamp = (DateTime.Now).ToString("ddHHmmss");
-                        File.WriteAllBytes(@"C:\temp\key" + timestamp + ".txt", keyinfo);
+                        File.WriteAllBytes(@"C:\temp\key" + timestamp, keyinfo);
                     }
                     catch(ArgumentNullException)
                     {
                         Console.WriteLine("Key generation failed");
                     }
-                    tblock1.Text = "You generated an RSA key pair of size " + KeySizeField.Text;
+                    if(malicious)
+                    {
+                        tblock1.Text = "Generated a new RSA key pair of size " + KeySizeField.Text;
+                        loadedstatusblock.Text = "Keysize " + KeySizeField.Text + " loaded";
+                    }
+                    else
+                    {
+                        tblock1.Text = "Generated a new RSA key pair of size " + RSAalg.KeySize;
+                        loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
+                    }
                 }
                 else
                 {
@@ -84,7 +93,7 @@ namespace RSAkeygen
 
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.InitialDirectory = "c:\\temp\\";
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 2;
             openFileDialog1.RestoreDirectory = true;
@@ -95,13 +104,14 @@ namespace RSAkeygen
                 try
                 {
                     String filename = openFileDialog1.FileName;
-                    byte[] keyinfo = File.ReadAllBytes(@"C:\temp\foo.txt");
+                    byte[] keyinfo = File.ReadAllBytes(filename);
                     RSAalg = new RSACryptoServiceProvider();
                     RSAalg.ImportCspBlob(keyinfo);
                     if(malicious)
                     {
                         File.WriteAllBytes(@"C:\temp\foo.txt", keyinfo);
                     }
+                    tblock1.Text = "Loaded an RSA key pair of size " + RSAalg.KeySize;
                     loadedstatusblock.Text = "Keysize " + RSAalg.KeySize + " loaded";
                 }
                 catch (Exception ex)

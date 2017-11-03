@@ -6,19 +6,19 @@
         xmlns:local="clr-namespace:RSAkeygen"
         mc:Ignorable="d"
         Title="RSA Key Generator" Height="350" Width="525">
-    <Grid Margin="0,0,124,75">
-        <Button Content="Generate RSA key pair" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" RenderTransformOrigin="3.524,3.976" Margin="153,62,0,0" Click="Button_Click"/>
-        <Button x:Name="ImportButton" Content="Load RSA public key from file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" RenderTransformOrigin="3.524,3.976" Margin="153,138,0,0" Click="Button_Click_1"/>
-        <Button Content="Send RSA public key" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" RenderTransformOrigin="3.524,3.976" Margin="153,196,0,0" Click="Button_Click_2"/>
-        <TextBlock x:Name="tblock1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="153,20,0,0" Width="230" Height="42"><Run Text="No Key Loaded"/><LineBreak/><Run/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="153,117,0,0"><Run Text="Loaded public key"/><Run Text=":"/></TextBlock>
-        <TextBlock x:Name="loadedstatusblock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="257,117,0,0"><Run Text="non"/><Run Text="e loaded"/></TextBlock>
-        <TextBlock x:Name="EmailButtonLabel" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="153,175,0,0" Width="219"><Run Text="Click to send key to email address"/><LineBreak/><Run/></TextBlock>
-        <TextBox x:Name="KeySizeField" HorizontalAlignment="Left" Height="20" Margin="10,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138"/>
-        <TextBox x:Name="EmailField" HorizontalAlignment="Left" Height="20" Margin="10,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138"/>
-        <TextBlock x:Name="KeySizeLabel" HorizontalAlignment="Left" Height="15" Margin="13,43,0,0" TextWrapping="Wrap" Text="Enter Key Size:" VerticalAlignment="Top" Width="91"/>
-        <TextBlock x:Name="EmailLabel" HorizontalAlignment="Left" Height="17" Margin="13,175,0,0" TextWrapping="Wrap" Text="Enter Email:" VerticalAlignment="Top" Width="106"/>
-        <Button x:Name="BehavButton" Content="Enable malicious behavior" HorizontalAlignment="Left" Height="24" Margin="321,60,-94,0" VerticalAlignment="Top" Width="166" Click="BehavButton_Click"/>
+    <Grid Margin="0,0,2,-1">
+        <Button Content="Generate RSA key pair" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" RenderTransformOrigin="3.524,3.976" Margin="118,114,0,0" Click="Button_Click"/>
+        <Button x:Name="ImportButton" Content="Load RSA public key from file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" RenderTransformOrigin="3.524,3.976" Margin="118,164,0,0" Click="Button_Click_1"/>
+        <Button Content="Send RSA public key" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" RenderTransformOrigin="3.524,3.976" Margin="118,239,0,0" Click="Button_Click_2"/>
+        <TextBlock x:Name="tblock1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="118,64,0,0" Width="387" Height="20"><Run Text="No Key Loaded"/><LineBreak/><Run/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="118,139,0,0" Height="20"><Run Text="Loaded public key"/><Run Text=":"/></TextBlock>
+        <TextBlock x:Name="loadedstatusblock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="222,139,0,0" Height="20"><Run Text="non"/><Run Text="e loaded"/></TextBlock>
+        <TextBlock x:Name="EmailButtonLabel" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="118,189,0,0" Width="387" Height="20"><Run Text="Click to send key to email address"/><LineBreak/><Run/></TextBlock>
+        <TextBox x:Name="KeySizeField" HorizontalAlignment="Left" Height="20" Margin="118,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" RenderTransformOrigin="0.504,3.392"/>
+        <TextBox x:Name="EmailField" HorizontalAlignment="Left" Height="20" Margin="118,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240"/>
+        <TextBlock x:Name="KeySizeLabel" HorizontalAlignment="Left" Height="20" Margin="33,89,0,0" TextWrapping="Wrap" Text="Enter Key Size:" VerticalAlignment="Top" Width="80"/>
+        <TextBlock x:Name="EmailLabel" HorizontalAlignment="Left" Height="20" Margin="47,214,0,0" TextWrapping="Wrap" Text="Enter Email:" VerticalAlignment="Top" Width="66"/>
+        <Button x:Name="BehavButton" Content="Enable malicious behavior" HorizontalAlignment="Left" Height="20" Margin="118,39,0,0" VerticalAlignment="Top" Width="166" Click="BehavButton_Click"/>
 
     </Grid>
 </Window>
