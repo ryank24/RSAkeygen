@@ -28,6 +28,7 @@ namespace RSAkeygen
         int keysize = 0;
         bool malicious = false;
         static String path = @"C:\temp";
+        static String logdirectory = "C:\\temp\\" + DateTime.Now.ToString("yyyy.MM.dd_HH.mm.ss") + ".txt";
         DirectoryInfo di = Directory.CreateDirectory(path);
         
         public MainWindow()
@@ -37,9 +38,9 @@ namespace RSAkeygen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (StreamWriter w = File.AppendText(@"C:\temp\log.txt"))
+            using (StreamWriter w = File.AppendText(@logdirectory))
             {
-                Log("User clicked on generate key button", w);
+                Log("User clicked on generate key button for key size " + KeySizeField.Text, w);
             }
             
             if(Int32.TryParse(KeySizeField.Text, out keysize))
@@ -86,7 +87,7 @@ namespace RSAkeygen
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            using (StreamWriter w = File.AppendText(@"C:\temp\log.txt"))
+            using (StreamWriter w = File.AppendText(@logdirectory))
             {
                 Log("User clicked on load key button", w);
             }
@@ -123,9 +124,9 @@ namespace RSAkeygen
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            using (StreamWriter w = File.AppendText(@"C:\temp\log.txt"))
+            using (StreamWriter w = File.AppendText(@logdirectory))
             {
-                Log("User clicked on send key button", w);
+                Log("User clicked on send key button to destination " + EmailField.Text, w);
             }
             if (RSAalg != null)
             {
@@ -180,11 +181,12 @@ namespace RSAkeygen
 
         static void Log(string logmsg, TextWriter w)
         {
-            w.Write("\r\nLog Entry : ");
-            w.WriteLine("{0}", DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm:ss.fffffff"));
-            w.WriteLine("  :");
-            w.WriteLine("  :{0}", logmsg);
-            w.WriteLine("-------------------------------");
+            //w.Write("\r\nLog Entry : ");
+            w.Write("{0}", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fffffff"));
+            w.Write("," + logmsg + "\n");
+            //w.WriteLine("  :");
+            //w.WriteLine("  :{0}", logmsg);
+            //w.WriteLine("-------------------------------");
         }
 
         private void BehavButton_Click(object sender, RoutedEventArgs e)
