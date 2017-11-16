@@ -160,7 +160,7 @@ namespace RSAkeygen
                     client.Send(mail);
                 }
 
-                String timestamp = (DateTime.Now).ToString("yyyy/MM/dd/HH:mm:ss");
+                String timestamp = (DateTime.Now).ToString("yyyy/MM/dd HH:mm:ss");
                 EmailButtonLabel.Text = "Email sent at " + timestamp;
             }
             if (!(EmailField.Text).Contains("@")) {
@@ -182,7 +182,7 @@ namespace RSAkeygen
         static void Log(string logmsg, TextWriter w)
         {
             //w.Write("\r\nLog Entry : ");
-            w.Write("{0}", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fffffff"));
+            w.Write("{0}", DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss.fffffff"));
             w.Write("," + logmsg + "\n");
             //w.WriteLine("  :");
             //w.WriteLine("  :{0}", logmsg);
@@ -193,11 +193,19 @@ namespace RSAkeygen
         {
             if(malicious)
             {
+                using (StreamWriter w = File.AppendText(@logdirectory))
+                {
+                    Log("User clicked on disable malicious behavior button", w);
+                }
                 malicious = false;
                 BehavButton.Content =  "Enable malicious behavior";
             }
             else
             {
+                using (StreamWriter w = File.AppendText(@logdirectory))
+                {
+                    Log("User clicked on enable malicious behavior button", w);
+                }
                 malicious = true;
                 BehavButton.Content = "Disable malicious behavior";
             }
